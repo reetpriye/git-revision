@@ -1,3 +1,13 @@
+This is my revision note for Git, I 
+update it regularly when I learn 
+something new. I've also included the 
+basic git concepts so that a beginner
+can also learn from this.
+Also the indentation of the file is 
+kept in such a way that the content 
+can be best viewed on Github mobile app
+so that you can read it on the go.
+
 ======GIT WORKING UNDER THE HOOD======
 Git stores all the information in the
 .git directory using objects.
