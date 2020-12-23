@@ -307,6 +307,20 @@ provided the rights to push. Other than
 that no one else can push to your repo.
 Q)Who has the right to view the 
 contents of my repo?
-Ans)If the repo is public, then anyone
-else only you.
+Ans)If the repo is public, then anyone.
+Else only you.
 
+=========GIT PUSH,FETCH & PULL=========
+Git push means pushing the changes from
+the local repo to the remote repo.
+Git fetch gets the updates(branch,
+commits,etc.) from the 
+remote repo but doesn't update the 
+staging area and working directory.
+Git pull fetches the updates as well as
+files and updates the staging area
+as well as working directory. This is
+same as doing git fetch first and then
+git merge after that.
+
+============What is Origin?============
