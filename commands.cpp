@@ -1,3 +1,4 @@
+/*
 =======GIT WORKING UNDER THE HOOD=======
 Git stores all the information in the
 .git directory using objects.
@@ -204,3 +205,4 @@ this case while merging.
 After this new branch can be deleted.
 
 2.Three Way Merge: 
+*/
