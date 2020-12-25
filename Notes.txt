@@ -7,8 +7,6 @@ Also the indentation of the file is
 kept in such a way that the content 
 can be best viewed on Github mobile app
 so that you can read it on the go.
-Also Pull Requests and Fork section is
-not present in this note.
 
 =====1)GIT WORKING UNDER THE HOOD=====
 Git stores all the information in the
