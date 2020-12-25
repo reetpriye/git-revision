@@ -8,7 +8,7 @@ kept in such a way that the content
 can be best viewed on Github mobile app
 so that you can read it on the go.
 
-======GIT WORKING UNDER THE HOOD======
+=====1)GIT WORKING UNDER THE HOOD=====
 Git stores all the information in the
 .git directory using objects.
 There are four types of git objects
@@ -46,7 +46,7 @@ detail regarding internal working of
 git. Also it's hard to tell everything
 without using of diagrams.
 
-==GET INFO OF GIT OBJECTS USING SHA1==
+==Get Info of Objects using SHA1 Hash==
 Get the content
     git cat-file -p SHA1Hash
 
@@ -56,7 +56,7 @@ Get the size
 Get the type
     git cat-file -t SHA1Hash
 
-=============INITIAL SETUP=============
+============2)INITIAL SETUP============
 Set Git Author name and Email
 git config --global user.name 'Name'
 git config --global user.email 'Email'
@@ -64,7 +64,7 @@ git config --global user.email 'Email'
 Verify using,
     git config --list
 
-==========BASIC GIT COMMANDS==========
+=========3)BASIC GIT COMMANDS=========
 Add file to staging area,
     git add <filename>
 
@@ -99,7 +99,8 @@ To clone a repo
 
 To find the modification
     git diff
-==========GIT FILES LIFECYCLE==========
+
+=========4)GIT FILES LIFECYCLE=========
 Untracked Modified Staged Unmodified
 
 Untracked->Staged: git add[for new 
@@ -114,7 +115,7 @@ commit.
 Files can also be untracked, means can 
 be moved from Unmodified->Untracked
 
-====ENTIRE LIFECYCLE IN A NUTSHELL====
+=====Entire lifecycle in a nutshell====
 ---------------------------------------
 WorkingDirectory|StagingArea|GitRepo
 ---------------------------------------
@@ -148,7 +149,7 @@ change the state back to unmodified and
 will also be present in all the three
 areas.This entire process runs in loop.
 
-===============GIT BRANCH==============
+==============5)GIT BRANCH=============
 Default branch is master/main
 Pointers for all branches are located 
 in .git/refs/heads
@@ -201,7 +202,7 @@ branch is pointing to the last commit.
 To point head back to the master 
 branch,use 'git checkout branch'.
 
-=============MERGE BRANCH=============
+=============Merge Branch=============
 To merge commit, first checkout to the
 receiving branch. Then use,
 git merge <merging-branch-name>
@@ -245,7 +246,7 @@ from the terminal using esc and then
 typing :wq and pressing enter after
 that.
 
-============MERGE CONFLICTS============
+============Merge Conflicts============
 Merge conflicts don't appear in fast
 forward merge.
 This is only possible when there are
@@ -283,7 +284,7 @@ merge the branches.
 It's better to use VSCode to solve the
 conflicts.
 
-================GITHUB================
+===============6)GITHUB================
 Git is distributed version-control
 system whereas Github provides
 repository hosting service.
@@ -294,7 +295,7 @@ e.g. /tree/master
      /tree/new-feature
      /tree/837462afhasf...(SHA1Hash)
 
-===========REMOTE REPOSITORY===========
+==========7)REMOTE REPOSITORY==========
 Remote repository is same as local
 repository in terms of structure i.e.
 we have working directory, staging area
@@ -320,7 +321,7 @@ contents of my repo?
 Ans)If the repo is public, then anyone.
 Else only you.
 
-=========GIT PUSH,FETCH & PULL=========
+========8)GIT PUSH,FETCH & PULL========
 Git push means pushing the changes from
 the local repo to the remote repo.
 Git fetch gets the updates(branch,
@@ -334,3 +335,118 @@ same as doing git fetch first and then
 git merge after that.
 
 ============What is Origin?============
+By default when we clone a repo git
+automatically creates a remote with the
+name of 'origin'. This is the default
+remote for you remote repository.
+It can be verified using command
+    git remote -v
+We can have multiple remote repository
+and can actually choose to which remote
+repo we want to push or pull the items
+from.
+If we write only 'git pull' then by
+default git will pull files from origin
+remote.
+If you use command 'git branch' that is
+only going to show you local branches.
+Also Git will not create corresponding
+local branches for all remote branches
+except default remote branch.
+To show all the branches,
+    git branch -a
+To show only remote branches,
+    git branch -r
+
+===========Tracking Branches===========
+Tracking branches are the local branch
+connected specifically to the remote
+branch.
+It might be possible that there are
+branches which are present in local
+repo but are not present in remote repo
+and vice-versa. These are non-tracking
+branches.
+When you checkout branch in local repo
+which is present in remote repo but not
+in local repo. Git will automatically
+start tracking that branch and connect
+it to the remote repo.
+To list all the tracking branches,
+    git branch -vv
+Example for better understanding:
+Let's suppose you create a remote repo
+online on GitHub and create one new
+branch 'new-feature' there. So the 
+remote repo will have two branch:
+main/master and new-feature
+After cloning this repo to your local
+drive there will only be one branch 
+by default present 'master/main'
+tracking corresponding remote branch.
+It can be verified using command,
+git branch -vv
+Now after that if you use the command,
+git checkout new-feature then git will
+create one additional tracking branch
+which will track the remote branch
+'new-feature'
+So if you type 'git branch -vv' now 
+that is going to show two branches 
+which tracks corresponding remote 
+branch.
+To show detailed information regarding
+all the remote and local branch, use
+    git remote show origin
+If you create some branch on remote 
+repo you have to use 'git fetch'
+command in order to see the new branch
+locally.
+If you delete some branch remotely,
+after that use 'git remote show origin'
+and that deleted branch will be marked
+as stale.
+After that you can use the command
+'git remote prune origin' to delete 
+and now it'll not be present anymore.
+'git branch -vv' will now show that
+the tracking branch has been gone.
+After that you can delete corresponding
+local branch.
+
+================GIT Pull===============
+Pull -> Fetch + Merge FETCH_HEAD
+Git fetch gets all the latest update
+from the remote repo to the local repo
+(such as all new commits that were 
+created in the remote repo, now will be
+available in the local repo).
+Also creates the required objects(blob,
+commit,tree,tags) for the same in .git 
+folder.
+After that, Git perfoms Merge operation
+locally. Git will merge remote branch
+to the local branch but by using 
+FETCH_HEAD present in .git folder,
+which will point to last commit in 
+remote repo corresponding branch.
+Also Git will try to apply fast-forward
+merge if possible, else will apply
+three way merge.
+Git pull only updates the currently
+checked out branch, not the other 
+present branches.
+Before pull, make sure it is tracking
+branch and has corresponding remote
+branch.
+To watch all the background process 
+that git does while pull, use the 
+verbose flag(-v) like this,
+    git pull -v
+If we read the contents of the
+FETCH_HEAD file present in .git folder
+using cat .git/FETCH_HEAD
+We can pretty much see everything by
+ourselves, that the currently checked
+out branch is for merge and other
+branches are marked as not for merge.
