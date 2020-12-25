@@ -7,6 +7,8 @@ Also the indentation of the file is
 kept in such a way that the content 
 can be best viewed on Github mobile app
 so that you can read it on the go.
+Also Pull Requests and Fork section is
+not present in this note.
 
 =====1)GIT WORKING UNDER THE HOOD=====
 Git stores all the information in the
@@ -450,3 +452,74 @@ We can pretty much see everything by
 ourselves, that the currently checked
 out branch is for merge and other
 branches are marked as not for merge.
+We can also merge manually using
+'git merge FETCH_HEAD'
+To delete remote branch from terminal,
+    git push origin -d <branch-name>
+To check local references,
+    ls .git/refs/heads
+To check remote references,
+    ls .git/refs/remotes/origin
+To check local and remote references 
+for a specific branch,
+    git show-ref <branch-name>
+To show all the reference where remote
+and local branches are pointing,
+    git show-ref
+To change author name and email for the
+very last commit,
+    git commit --ammend --author="Reet
+    Priye" <reetpriye@gmail.com>
+
+==============9)Git Tags===============
+Tag is static text pointer to specific
+commit.
+Staging Vs Production:
+  Git is primarily used for software
+  development. And in modern days,
+  software are developed using CI/CD
+  principle.
+  CI/CD: Continuous Integration/
+         Continuous Development
+  According to that there are two 
+  environments staging and production.
+  For staging mainly branch release is
+  used and for production, master is 
+  used.
+  Staging:
+           -primarily for testing
+           -usually for internal use
+           -merging is performed freq.
+           -different branches gets 
+            merged into release branch
+           -multiple people may have
+            merge rights
+  Development: 
+           -for stable production
+           -for customers
+           -usually online release 
+            branch gets merged
+           -hotfixes may go directly
+            into production
+           -only few people have merge
+            rights
+
+Semantic Versioning:
+  Major version<-5.1.3->Patch version
+                   |
+           Minor version
+
+  Minor version should be incremented,
+  when there are small changes in the
+  project and also it doesn't lead to 
+  incompatibility of any package or
+  dependencies from previous version.
+
+  Also pre-release versioning is done
+  like this 5.1.3-alpha or 5.1.3-beta
+  or 5.1.3-1.3 which will be converted
+  to 5.1.3 upon final release.
+  Also we can use 5.1.3-rc.2[rc stands
+  for release candidate], when we are
+  pretty close for next release.
+  Read more @ https://semver.org
