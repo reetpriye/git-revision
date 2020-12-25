@@ -426,7 +426,7 @@ available in the local repo).
 Also creates the required objects(blob,
 commit,tree,tags) for the same in .git 
 folder.
-After that, Git perfoms Merge operation
+After that,Git performs Merge operation
 locally. Git will merge remote branch
 to the local branch but by using 
 FETCH_HEAD present in .git folder,
@@ -468,10 +468,10 @@ and local branches are pointing,
     git show-ref
 To change author name and email for the
 very last commit,
-    git commit --ammend --author="Reet
+    git commit --amend --author="Reet
     Priye" <reetpriye@gmail.com>
 
-==============9)Git Tags===============
+==============9)GIT TAGS===============
 Tag is static text pointer to specific
 commit.
 Staging Vs Production:
@@ -507,7 +507,7 @@ Staging Vs Production:
 Semantic Versioning:
   Major version<-5.1.3->Patch version
                    |
-           Minor version
+              Minor version
 
   Minor version should be incremented,
   when there are small changes in the
@@ -523,3 +523,40 @@ Semantic Versioning:
   for release candidate], when we are
   pretty close for next release.
   Read more @ https://semver.org
+
+Git Tags are of two types:
+  Lightweight tag:
+    -stored in the .git/refs/tags
+    command: git tag v1.0.0
+    -not pushed to remote
+
+  Annotated tag:
+    -stored in the .git/refs/tags and
+    also in .git/objects
+    -stores tag message
+    -stores tag author and date
+    command: git tag -a v1.0.0 -m 'msg'
+
+Tag name must be unique across repo.
+Tag just point to the last commit where
+that tag was created.
+The content can be read using command,
+    cat .git/refs/tags/v1.0.0
+Also it can be checked that Lightweight
+tags are not present in the objects 
+folder using command,
+    ls -la .git/objects
+An annotated tag contents can be read
+using the command,
+    git tag -v v1.0.0
+It will throw error when used with a
+lightweight tag
+Also lightweight tags are not pushed
+to remote by default.
+
+To push only specific tag use command,
+    git push -v <tagName>
+To push tags to remote use command,
+    git push -v --tags
+
+==============10)REBASING==============
