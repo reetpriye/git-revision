@@ -7,6 +7,11 @@ Also the indentation of the file is
 kept in such a way that the content 
 can be best viewed on Github mobile app
 so that you can read it on the go.
+I've tried to make it free of mistakes,
+but if there are any wrong information.
+Or if you have anything to improve,
+Feel free to create an issue for the 
+same.
 
 =====1)GIT WORKING UNDER THE HOOD=====
 Git stores all the information in the
@@ -558,3 +563,185 @@ To push tags to remote use command,
     git push -v --tags
 
 ==============10)REBASING==============
+Rebasing is destructive operation, as
+it creates new commits.
+Rebasing is alternative way to merge
+two or different branches into 
+together.
+One of the advantage of using rebasing
+is it makes commits history linear.
+But the disadvantage is that it doesn't
+keep entire history of all commits.
+You'll lost the data that when a 
+specific branch which has been merged
+was created and when that was merged.
+
+Diagram for better understanding...
+
+When you perform three way merge:
+
+           feature-1 branch
+         _____________________ 
+        |                     |
+---------------------------------------
+|_______________|
+ feature-2 branch
+
+If you perform rebasing:
+
+---------------------------------------
+
+History is linear, you won't get the 
+details when other branches were 
+created or merged.
+
+It is a two step process, where first
+we need to rebase and then merge.
+Steps to rebase are as follow:
+1.Checkout new-branch
+    git checkout new-branch
+2.Rebase new-branch on top of the base
+branch
+    git rebase master
+3.Checkout base branch
+    git checkout master
+4.Merge new-branch into the base branch
+(Fast forward merge will be used)
+    git merge new-branch
+
+Diagram for better understanding...
+Step 1:
+    git checkout master
+    git rebase master
+
+             new-branch old
+         _____________________     nbp
+        |              ____________/
+        |             | after rebase      
+----------------------\
+    base branch        \
+                   head+master pointer
+
+nbp: new-branch pointer
+It gets dislocated, and now points to 
+the last of the copied commits.
+
+In this step, after rebasing, git
+creates a copy of all the commits of
+new-branch and creates brand new
+commits[as parent pointer is changed] 
+on top of the base branch and it points
+to the very last commit of the base 
+branch.
+After this step, all the old commits of
+the new-branch is garbage collected by
+git, as the new-branch pointer moves to
+the very last commit of the copied
+commits.
+
+Step 2:
+    git checkout master
+    git merge new-branch
+And finally a fast-forward merge is 
+applied without any new merge commits.
+After successful rebasing, you can
+delete new-branch.
+
+=============11).GITIGNORE=============
+By default, git does not ignore any
+kind of files.
+But if you can explicitly tell Git
+which files and folder needs to be
+ignored.
+These rules are defined in the
+.gitignore file which is placed in the 
+root directory and this .gitignore file
+itself must be committed.
+It's better to create a .gitignore at
+the starting of project.
+
+           -GIT FILE STATUSES-
+
+Untracked       Tracked        Ignored
+          _________|_________
+         |         |         |
+    Unmodified  Modified   Staged
+
+Any file in git can have untracked,
+tracked or ignored status.
+When we add a new files it is untracked
+by default, after executing command
+'git add' we can track that file.
+And placing a file in .gitignore simply
+indicates git to ignore that file.
+Let's suppose you add 'text1.txt'
+in .gitignore before it was created.
+So after creation of the file git will
+not tell you to stage that file and
+won't have status as untracked.
+
+Sample of .gitignore:
+    #Ignore single file
+    newfile.txt
+    #Ignore all files in the bin folder
+    bin/
+    #Ignore all .tmp files
+    *.tmp
+
+Ignore previously committed file:
+    One of the approach is to simply
+    delete the file and add the file
+    name to .gitignore.
+    So that if you create that file 
+    again, it'll be ignored by git.
+    There is another way, where we'll
+    delete that file from the local
+    git repository and not delete that
+    from working directory.
+    Command to delete file from git
+    repository
+        git rm --cached <file-name>
+    If you use 'git status' now, it'll
+    show that the file is deleted.
+    But it'll be present in the local 
+    directory.
+
+If you want pre-built gitignore file 
+for your project visit
+https://gitignore.io
+
+===========12)DETACHED HEAD===========
+Head always points to the last commit
+of the checked out branch and with 
+every new commit it moves along with
+that.
+But when we checkout to some specific 
+commit, head goes into detached state.
+e.g.  when we execute command,
+    git checkout 6c34cs
+After checking out to specific commit,
+using it's SHA1Hash we can make some
+experimental changes and commits and 
+get back to the base branch and all the
+experimental commits will soon be 
+garbage collected by git.
+Also with every new commit made in 
+detached head state, head pointer moves
+to the very next commit.
+If we want to retain those commits,
+we have to create a new branch by using
+    git checkout -b <branch-name>
+
+We can verify where head is pointing
+by using command,
+    cat .git/HEAD
+
+
+=============ADVANCED GIT==============
+In this section, there are commands 
+which are not used regularly, but can 
+be helpful in may situation.
+Also there are some commands which are
+quite destructive, so use that with
+caution.
+
