@@ -737,7 +737,7 @@ by using command,
     cat .git/HEAD
 
 
-=============ADVANCED GIT==============
+===========13)ADVANCED GIT=============
 In this section, there are commands 
 which are not used regularly, but can 
 be helpful in may situation.
@@ -745,3 +745,90 @@ Also there are some commands which are
 quite destructive, so use that with
 caution.
 
+================Git Log================
+Extended view of all commits,
+    git log
+One line representation of all commits,
+    git log --oneline
+Similar to oneliner, but shows date,
+    git lg
+Graphical representation which shows
+commit's parent,
+    git log --graph
+Graphical representation which shows
+commit's parent[in oneline],
+    git log --graph --oneline
+Logs along with quantity of changes,
+    git log --stats
+Logs along with actual changes,
+    git log -p
+Show last n commits,
+    git log -n
+Show last n commits in oneline,
+    git log -n --oneline
+Summary of all the commits made in the
+repo,
+    git shortlog
+[By default it is sorted according to 
+the name of authors]
+To sort it according to quantity of 
+commits made,
+    git shortlog -n
+To get number of commits made and name 
+of author,
+    git shortlog -n -s
+To get number of commits made, name and
+email of author,
+    git shortlog -n -s -e
+To get all the commits made by a author
+    git log --author="<username>"
+[This filter is regular expression
+filter so you don't need to type full
+username]
+To filter commits containing some words
+    git log --grep="<description text>"
+
+Pretty formatting in git log:
+To show only SHA1Hash,
+    git log --pretty=format:"%H"
+Here %H is a format specifier,
+Some of the common specifier are:
+    cn -> Committer name
+    H -> Full SHA1Hash
+    h -> Short SHA1Hash
+    cd -> Commit date
+We can also use our own text, e.g.
+    git log --pretty=format:"Author of
+    commit: %cn"
+Visit for more pretty specifier
+@ https://devhints.io/git-log-format
+
+To get only merge commits,
+    git log --merges --oneline
+To get merge commits which were not
+created by git,
+    git log --no-merges --oneline
+
+===============Git Reset===============
+It's recommended not to use this 
+command on base or public branch,
+however you can use it on your local
+private branch where there are no 
+collaborators.
+Using this command on public branch
+can lead to change in history of
+commits, and other collaborator might
+find it difficult to work.
+Git reset allows you to discard some
+committed changes.
+Let's say you made some commits and you
+are not happy with those changes and 
+you want to discard that commit or 
+several commits and you want to get
+back to your previous state in
+repository.
+There are three options available for
+git reset command,
+    --hard
+    --mixed(default)
+    --soft
