@@ -1046,3 +1046,53 @@ are not used frequently in .git/pack
 directory.
 
 ======Git Rebasing with Squashing======
+In large repositories, with many
+feature branches, many collaborators.
+The technique of rebasing with 
+squashing is applied when merging
+specific pull-request or specific
+branch into main branch-release or 
+master.
+This way also git history, remains
+pretty clean as history is linear due
+to rebasing instead of using 3-way
+merge approach.
+Also squashing, squash multiple commits
+into one single commit.
+Rebasing with squashing can be very
+easily done on Github when you are
+merging PR, just select the option from
+the dropdown menu 'Squash and merge'.
+
+Interactive rebasing with squashing in
+the local repository:
+To perform rebasing with squashing, we
+need to use -i flag while rebasing.
+Example:
+Create new branch 'feature-1' and 
+checkout to that branch.
+Create some commits in the feature-1
+branch and after that to rebase it,
+we either need to specify the number 
+of last commits like 'HEAD~n' or else
+SHA1Hash of the specific commit that
+comes before all the commits that you
+want to squash. Use,
+    git squash -i <SHA1Hash>
+After that, replace 'pick' with either
+'s' or 'squash', save the file using
+Esc->:wq->enter
+After that you'll be prompted to change
+commit message.
+Save that again using Esc->:wq->enter
+Now git has created just single commit,
+instead of three commits which contains
+all the changes that were made in those
+commits.
+Verify it using 'git log'
+Now 'feature-1' branch can be safely
+merged into main branch. For that,
+checkout to main branch. Then use
+command, git merge feature-1
+In this case, fast forward merge will
+be applied as rebasing has been done.
