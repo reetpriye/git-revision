@@ -105,6 +105,9 @@ To clone a repo
 To find the modification
     git diff
 
+To get changes made in specific commit
+    git show <SHA1Hash>
+
 =========4)GIT FILES LIFECYCLE=========
 Untracked Modified Staged Unmodified
 
@@ -832,3 +835,214 @@ git reset command,
     --hard
     --mixed(default)
     --soft
+If you execute,
+    git reset <Commit SHA1Hash>
+By default, git apply mixed mode reset.
+Where git discard commit or commits,
+unstage all the changes that were made
+but leaves working directory as it is.
+To sum up all,
+In --mixed mode, git
+  -discard commits
+  -discard changes in the staging area
+  -keep changes in working directory
+Hence you have to first use command
+'git add' to add those changes to 
+staging area and thereafter commit 
+those changes.
+
+In --soft mode, git
+  -discard commits
+  -keep changes in the staging area
+  -keep changes in working directory
+We can simply commit the changes we
+don't need to stage those changes.
+
+In --hard mode, git
+  -discard commits
+  -discard changes in the staging area
+  -discard changes in working directory
+It is the most destructive command used
+with git reset as it discards all the
+commits and changes that were made 
+after that specific commit.
+If you've cloned the repo then simply
+you can pull the commits that were
+discarded after you applied 'git reset
+--hard' command.
+
+To reset by number of last n commits,
+    git reset HEAD~n
+Here also by default --mixed mode has 
+been applied.
+
+==============Git Revert===============
+git revert <SHA1Hash>
+It is safe operation and can be applied
+on any public branch.
+This command inverses changes of a
+specific commit, let's say you are not
+modified with the recent commit that
+you made. So you can simply execute
+command, git revert HEAD (as HEAD is
+pointing to very last commit, Hence
+we can also use this).
+After this, git will open vim editor
+with the option to modify commit 
+message and after that a new commit 
+will be created which will revert the
+last commit.
+This command is useful when you have
+pushed the changes to the public branch
+and someone has pulled those changes.
+Now if you want to modify the commit,
+git revert is your best pal there.
+It does not modify the history, just
+creates one additional commit.
+Conflicts may arise when you revert
+some commit, for that first resolve 
+that in VSCode, stage those changes
+and finally use 'git revert --continue'
+to continue reverting those changes.
+
+===============Git Amend===============
+This command is used when you want to
+modify the last commit. It is useful if
+you made some typo or want to modify
+some files and don't want to create
+additional commit for that.
+But this is a destructive command, as
+it creates brand new commit and the
+last commit will be garbage collected 
+by Git. Therefore avoid using this 
+command on public branch.
+
+To change last commit message,
+    git commit --amend -m 'New message'
+
+To change last commit author details,
+    git commit --amend --author="Reet
+    Priye <reetpriye@gmail.com>"
+
+This command can only be applied on the
+latest commit, not on any other commit.
+
+========Cherry Picking Commits=========
+Cherry pick allows us to pick any
+commit and insert it in the last of
+current checked out branch.
+When do we use this feature?
+Let's suppose you are working on a
+different branch and you want to choose
+only one commit and insert it in the 
+master branch or release branch just
+for fixing some bug.
+Another scenario can be, let's suppose
+you moved to detached head state and
+created one or two commits there but
+you don't want to create another branch
+and after that merge it to the base
+branch. In that case you can cherry
+pick that commit and hence add that 
+commit to the master branch.
+Be sure to checkout to the branch where
+you want to add that commit.
+Command to cherry pick,
+    git cherry-pick <SHA1Hash>
+
+Command to cherry pick without creating
+commit,
+    git cherry-pick --no-commit <SHA1>
+
+This command will only add changes to
+the staging area, but will not create
+any commit.
+You have to manually do that.
+
+==============Git Reflog===============
+This command actually shows log of
+git operations performed on your local
+system only.
+Also operations in the reflog are 
+stored by default 90 days.
+This command is very helpful when you
+have accidentally reset some commits.
+Command:
+    git reflog
+
+By default, this command will show all
+the changes made to the HEAD pointer.
+If you want to get log of some other
+branch use,
+    git reflog show <branch-name>
+
+What can be done using git reflog?
+Firstly, we can checkout to any commit
+present in the git reflog output, and
+get into detached HEAD state to see 
+contents at that time.
+Also if you checkout to any specific
+commit, git reflog will also record
+this operation that you have done with
+HEAD pointer.
+We can also use 'HEAD@{n}'[check git
+reflog output you'll understand]
+to checkout to that commit.
+If you want to revert after using git
+reset and get all the commits back,
+use reflog to check the HEAD logs and 
+then 'git reset --hard' again to bring
+back those commits.
+
+=============Git Stashing==============
+Git stashing helps you to save
+uncommitted logs.
+Let's suppose you have modified some
+files on some other branch, added some
+of the files to the staging area but
+not yet committed them.
+And you want to checkout to some other
+branch, in this case you can stash
+those changes so that when you later
+checkout to that branch,you can get all
+the changes back.
+
+To stash changes, 
+    git stash
+After that all the files will revert
+back to the original state.
+And git will create commit object in
+the folder .git/refs/stash
+You can look at the content of those
+file by using,
+    cat .git/refs/stash
+    and then,
+    git cat-file -p <SHA1Hash>
+Object type can also be checked using,
+    git cat-file -t <SHA1Hash>
+And you'll get this is a 'commit'
+object.
+Hence it means, git has created one
+temporarily commit stores it in the
+git objects folder and created a 
+reference to that commit in .git/refs.
+Now you can checkout to some other
+branch and get back to this branch.
+And later on when you decide to get
+back those uncommitted changes use,
+    git stash pop
+
+==========Garbage Collection===========
+Garbage collection is done
+automatically by git in order to delete
+unreachable objects or old references
+in git.
+We can manually run garbage collection
+by executing command,
+    git gc
+After execution of this command, git
+compresses some of the commits which 
+are not used frequently in .git/pack
+directory.
+
+======Git Rebasing with Squashing======
